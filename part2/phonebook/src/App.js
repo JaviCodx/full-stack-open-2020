@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 
 // 123
 
-const List = ({ persons }) => {
+const List = ({ persons123 }) => {
 
   return (
     <ul>
-      {persons.map(person => <Person key={person.name} person={person} />)}
+      {persons123.map(person => <Person key={person.name} person={person} />)}
     </ul>
   )
 
@@ -14,7 +14,7 @@ const List = ({ persons }) => {
 
 const Person = ({ person }) => <li>{person.name}  {person.number}</li>
 
-const AddForm = ({ persons, setPersons }) => {
+const AddForm = ({ persons123, setPersons123 }) => {
 
 
   const [newName, setNewName] = useState('')
@@ -24,7 +24,7 @@ const AddForm = ({ persons, setPersons }) => {
     event.preventDefault();
 
     const personExists =
-      persons
+      persons123
         .map(person => person.name)
         .includes(newName);
 
@@ -32,7 +32,7 @@ const AddForm = ({ persons, setPersons }) => {
       alert(`${newName} already exits`)
     } else {
       const newPerson = { name: newName, number: newNumber }
-      setPersons(persons.concat(newPerson));
+      setPersons123(persons.concat(newPerson));
     }
 
     setNewName('');
