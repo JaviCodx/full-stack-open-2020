@@ -12,11 +12,13 @@ const App = () => {
     { name: 'Mary Poppendieck', number: '39-23-6423122' }
   ])
 
+  const [unfilteredPersons, setUnfilteredPersons] = useState([...persons])
+
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter persons={persons} setPersons={setPersons} />
-      <AddForm persons={persons} setPersons={setPersons} />
+      <Filter persons={persons} setPersons={setPersons} unfilteredPersons={unfilteredPersons} setUnfilteredPersons={setUnfilteredPersons} />
+      <AddForm persons={persons} setPersons={setPersons} unfilteredPersons={unfilteredPersons} setUnfilteredPersons={setUnfilteredPersons} />
       <h2>Numbers</h2>
       <List persons={persons} />
     </div>
