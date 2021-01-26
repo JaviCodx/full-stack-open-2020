@@ -16,8 +16,8 @@ const App = () => {
         console.log('promise fulfilled')
         if (response && response.data) {
           console.log('Valid data')
-          setIsLoading(false)
           setCountries(response.data)
+          setIsLoading(false)
         }
       })
   }, [])
@@ -30,7 +30,7 @@ const App = () => {
     console.log("Loaded")
     return (
       <div>
-        sad
+        {countries[0].name}
       </div>
     )
   } else {
