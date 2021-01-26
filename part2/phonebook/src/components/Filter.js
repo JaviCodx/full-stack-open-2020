@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
-const Filter = ({ persons, setPersons }) => {
+const Filter = ({ persons, setPersons, unfilteredPersons, setUnfilteredPersons }) => {
 
     const [newFilter, setNewFilter] = useState('')
-    const [unfilteredPersons] = useState(persons)
+
 
 
     const handleFilterChange = (event) => {

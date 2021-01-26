@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 
-const AddForm = ({ persons, setPersons }) => {
+const AddForm = ({ persons, setPersons, unfilteredPersons, setUnfilteredPersons }) => {
 
 
     const [newName, setNewName] = useState('')
@@ -20,10 +20,13 @@ const AddForm = ({ persons, setPersons }) => {
         } else {
             const newPerson = { name: newName, number: newNumber }
             setPersons(persons.concat(newPerson));
+            setUnfilteredPersons(unfilteredPersons.concat(newPerson))
         }
 
         setNewName('');
         setNewNumber('');
+
+
 
     }
 
