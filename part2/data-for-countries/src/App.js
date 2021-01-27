@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import Filter from "./components/Filter"
+import CountriesList from "./components/CountriesList"
 
 
 const App = () => {
 
   const [countries, setCountries] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [countriesToShow, setCountriesToShow] = useState([]);
+
+
 
 
   useEffect(() => {
@@ -22,21 +27,22 @@ const App = () => {
       })
   }, [])
 
-  console.log(isLoading)
-  console.log(countries)
+
+  return (
+    <>{
+      !isLoading
+        ?
+        <div>
+          <Filter countries={countries} setCountries={setCountries} countriesToShow={countriesToShow} setCountriesToShow={setCountriesToShow} />
+          <CountriesList countriesToShow={countriesToShow} setCountriesToShow={setCountriesToShow} />
+        </div>
+
+        : "Loading"
+    }</>
+  )
 
 
-  if (!isLoading) {
-    console.log("Loaded")
-    return (
-      <div>
-        {countries[0].name}
-      </div>
-    )
-  } else {
-    console.log("Loading...")
-    return <div>Loading</div>
-  }
+
 }
 
 
