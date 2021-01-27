@@ -16,7 +16,12 @@ const List = ({ countriesToShow, setCountriesToShow }) => {
   } else if (countriesToShow.length >= 10) {
     return <div>Too many matches, be more specific</div>;
   } else if (countriesToShow.length === 1) {
-    return <CountrieFull countrie={countriesToShow[0]} />;
+    return (
+      <CountrieFull
+        countrie={countriesToShow[0]}
+        countriesToShow={countriesToShow}
+      />
+    );
   } else {
     return <div>No matches found</div>;
   }

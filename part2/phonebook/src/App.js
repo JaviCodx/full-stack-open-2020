@@ -1,17 +1,27 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Filter from "./components/Filter";
 import AddForm from "./components/AddForm";
 import List from "./components/List";
+import personsService from "./services/persons";
+import Notification from "./components/Notification";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
+  const [notificationMessage, setNotificationMessage] = useState([]);
+
+  const handleNotfication = (success, msg) => {
+    setNotificationMessage([success, msg]);
+    setTimeout(() => {
+      setNotificationMessage([]);
+    }, 2000);
+  };
 
   useEffect(() => {
     console.log("effect");
-    axios.get("http://localhost:3001/persons").then((response) => {
+    personsService.getAll().then((initialPersons) => {
       console.log("promise fulfilled");
-      setPersons(response.data);
+      setUnfilteredPersons(initialPersons);
+      setPersons(initialPersons);
     });
   }, []);
 
@@ -20,20 +30,21 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter
-        persons={persons}
-        setPersons={setPersons}
-        unfilteredPersons={unfilteredPersons}
-        setUnfilteredPersons={setUnfilteredPersons}
-      />
+      <Notification message={notificationMessage} />
+      <Filter setPersons={setPersons} unfilteredPersons={unfilteredPersons} />
       <AddForm
         persons={persons}
         setPersons={setPersons}
         unfilteredPersons={unfilteredPersons}
         setUnfilteredPersons={setUnfilteredPersons}
+        handleNotfication={handleNotfication}
       />
       <h2>Numbers</h2>
-      <List persons={persons} />
+      <List
+        persons={persons}
+        setPersons={setPersons}
+        handleNotfication={handleNotfication}
+      />
     </div>
   );
 };

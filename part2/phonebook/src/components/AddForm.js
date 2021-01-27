@@ -1,10 +1,12 @@
 import { useState } from "react";
+import personsSevice from "../services/persons";
 
 const AddForm = ({
   persons,
   setPersons,
   unfilteredPersons,
   setUnfilteredPersons,
+  handleNotfication,
 }) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
@@ -12,14 +14,40 @@ const AddForm = ({
   const addPerson = (event) => {
     event.preventDefault();
 
-    const personExists = persons.map((person) => person.name).includes(newName);
+    const foundPerson = persons.find(
+      (p) => p.name.toUpperCase() === newName.toUpperCase()
+    );
 
-    if (personExists) {
-      alert(`${newName} already exits`);
+    if (foundPerson) {
+      const changedPerson = { ...foundPerson, number: newNumber };
+
+      const confirm = window.confirm(
+        `${newName} already exits in the phonebook, replace old number with "${newNumber}"?`
+      );
+      if (confirm) {
+        personsSevice
+          .update(foundPerson.id, changedPerson)
+          .then((returnedPerson) => {
+            setPersons(
+              persons.map((p) => (p.id !== foundPerson.id ? p : returnedPerson))
+            );
+
+            handleNotfication(true, `${foundPerson.name} was updated`);
+          })
+          .catch(() => {
+            handleNotfication(false, `${foundPerson.name} was already deleted`);
+
+            setPersons(persons.filter((n) => n.id !== foundPerson.id));
+          });
+      }
     } else {
       const newPerson = { name: newName, number: newNumber };
-      setPersons(persons.concat(newPerson));
-      setUnfilteredPersons(unfilteredPersons.concat(newPerson));
+      personsSevice.create(newPerson).then((createdPerson) => {
+        handleNotfication(true, `${newName} was added`);
+
+        setPersons(persons.concat(createdPerson));
+        setUnfilteredPersons(unfilteredPersons.concat(createdPerson));
+      });
     }
 
     setNewName("");
@@ -33,6 +61,7 @@ const AddForm = ({
   return (
     <div>
       <h2>add new</h2>
+
       <form onSubmit={addPerson}>
         <div>
           name: <input value={newName} onChange={handleNameChange} />
