@@ -10,6 +10,20 @@ const AddForm = ({
 }) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
+  const isNameEmpty = newName !== "";
+  let errorName = isNameEmpty ? null : "*";
+  const isNumberEmpty = newNumber !== "";
+  let errorNumber = isNumberEmpty ? null : "*";
+  errorName =
+    newName.length > 0 && newName.length < 4
+      ? (errorName = "Name must be at least 4 characters")
+      : errorName;
+
+  errorNumber =
+    (newNumber.length > 0 && newNumber.length < 8) ||
+    (!Boolean(Number(newNumber)) && newNumber.length > 0)
+      ? (errorNumber = "Number must be at least 8 digits")
+      : errorNumber;
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -34,20 +48,27 @@ const AddForm = ({
 
             handleNotfication(true, `${foundPerson.name} was updated`);
           })
-          .catch(() => {
-            handleNotfication(false, `${foundPerson.name} was already deleted`);
-
-            setPersons(persons.filter((n) => n.id !== foundPerson.id));
+          .catch((error) => {
+            // this is the way to access the error message
+            handleNotfication(false, `${error.response.data.error}`);
+            console.log(error.response.data.error);
           });
       }
     } else {
       const newPerson = { name: newName, number: newNumber };
-      personsSevice.create(newPerson).then((createdPerson) => {
-        handleNotfication(true, `${newName} was added`);
+      personsSevice
+        .create(newPerson)
+        .then((createdPerson) => {
+          handleNotfication(true, `${newName} was added`);
 
-        setPersons(persons.concat(createdPerson));
-        setUnfilteredPersons(unfilteredPersons.concat(createdPerson));
-      });
+          setPersons(persons.concat(createdPerson));
+          setUnfilteredPersons(unfilteredPersons.concat(createdPerson));
+        })
+        .catch((error) => {
+          // this is the way to access the error message
+          handleNotfication(false, `${error.response.data.error}`);
+          console.log(error.response.data.error);
+        });
     }
 
     setNewName("");
@@ -60,17 +81,21 @@ const AddForm = ({
 
   return (
     <div>
-      <h2>add new</h2>
+      <h2>Add new</h2>
 
       <form onSubmit={addPerson}>
         <div>
           name: <input value={newName} onChange={handleNameChange} />
+          <span style={{ color: "red" }}>{errorName}</span>
         </div>
         <div>
           number: <input value={newNumber} onChange={handleNumberChange} />
+          <span style={{ color: "red" }}>{errorNumber}</span>
         </div>
         <div>
-          <button type="submit">add</button>
+          <button disabled={Boolean(errorName || errorNumber)} type="submit">
+            add
+          </button>
         </div>
       </form>
     </div>

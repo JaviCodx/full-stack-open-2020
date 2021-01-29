@@ -33,3 +33,13 @@ code {
   padding: 10px;
   margin-bottom: 10px;
 }
+
+@media (max-width: 768px) {
+  .error {
+    width: 70vw;
+  }
+
+  .success {
+    width: 70vw;
+  }
+}

@@ -13,7 +13,7 @@ const App = () => {
     setNotificationMessage([success, msg]);
     setTimeout(() => {
       setNotificationMessage([]);
-    }, 2000);
+    }, 3000);
   };
 
   useEffect(() => {
