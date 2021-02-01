@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Blog from "../components/Blog";
 import CreateBlogForm from "../components/CreateBlogForm";
+import blogService from "../services/blogs";
 
-const BlogList = ({ blogs, setBlogs, user, setUser, handleNotification }) => {
+const BlogList = ({ user, setUser, handleNotification }) => {
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    blogService.getAll().then((blogs) => setBlogs(blogs));
+  }, []);
   const logOut = () => {
     window.localStorage.clear();
     setUser(null);
