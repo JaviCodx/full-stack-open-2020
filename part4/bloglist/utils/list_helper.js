@@ -2,23 +2,21 @@ const dummy = (blogs) => {
   return 1;
 };
 
-const totalLikes = (blogs) => {
-  const reducer = (sum, item) => {
-    return sum + item;
-  };
-  return blogs.map((blog) => blog.likes).reduce(reducer, 0);
-};
+// aqui viene bien un lodash.add y no lo tendrias ni que declarar, lo pasarias directamente al reduce
+const add = (a, b) => a + b;
+const totalLikes = (blogs) => blogs.map((blog) => blog.likes).reduce(add, 0);
+
+const keepMaxLikesBlogReducer = (accBlog, currentBlog) =>
+  accBlog.likes > currentBlog.likes ? accBlog : currentBlog;
 
 const favoriteBlog = (blogs) => {
-  const maxLikes = Math.max(...blogs.map((blog) => blog.likes));
-
-  const favourite = blogs.filter((blog) => blog.likes === maxLikes);
-
-  const returned = favourite.map((f) => {
-    return { title: f.title, author: f.author, likes: f.likes };
-  });
-
-  return returned;
+  const favourite = blogs.reduce(keepMaxLikesBlogReducer);
+  // aqui viene bien un lodash.pick(favourite, 'title','author','likes')
+  return {
+    title: favourite.title,
+    author: favourite.author,
+    likes: favourite.likes,
+  };
 };
 
 const mostBlogs = (blogs) => {

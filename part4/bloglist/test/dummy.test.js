@@ -92,9 +92,11 @@ describe("total likes", () => {
 
 describe("favourite blog", () => {
   test("of bigger list ", () => {
+    // el resultado de favourite blog tiene mas sentido que sea un objeto en vez de un array
+    // O a lo mejor un array pero solo en caso de multiples blogs con el mismo numero de likes
     const result = listHelper.favoriteBlog(blogs);
 
-    expect(result[0]).toEqual({
+    expect(result).toEqual({
       title: "Canonical string reduction",
       author: "Edsger W. Dijkstra",
       likes: 12,
