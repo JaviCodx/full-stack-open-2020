@@ -18,13 +18,6 @@ const App = () => {
     }, 3000);
   };
 
-  useEffect(() => {
-    if (user) {
-      setUser(user);
-      blogService.setToken(user.token);
-    }
-  }, []);
-
   return (
     <div>
       <h1>Blogs</h1>

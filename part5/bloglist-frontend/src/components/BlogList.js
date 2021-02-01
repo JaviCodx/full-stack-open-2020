@@ -9,6 +9,13 @@ const BlogList = ({ user, setUser, handleNotification }) => {
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      blogService.setToken(user.token);
+    }
+  }, []);
+
   const logOut = () => {
     window.localStorage.clear();
     setUser(null);
