@@ -20,8 +20,6 @@ const LoginForm = ({ handleNotification, setUser }) => {
       blogService.setToken(user.token);
       setUser(user);
       handleNotification(true, `Welcome back ${user.name}`);
-      setUsername("");
-      setPassword("");
     } catch (exception) {
       handleNotification(false, "Wrong credentials");
     }
