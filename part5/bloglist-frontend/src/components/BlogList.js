@@ -7,13 +7,8 @@ const BlogList = ({ user, setUser, handleNotification }) => {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
+    blogService.setToken(user.token);
     blogService.getAll().then((blogs) => setBlogs(blogs));
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-      blogService.setToken(user.token);
-    }
   }, []);
 
   const logOut = () => {
