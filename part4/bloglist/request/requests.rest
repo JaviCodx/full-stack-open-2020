@@ -5,12 +5,12 @@ GET http://localhost:3001/api/blogs/
 GET http://localhost:3001/api/users/
 
 ###
-POST http://localhost:3003/api/blogs/ HTTP/1.1
+POST http://localhost:3001/api/blogs/ HTTP/1.1
 content-type: application/json
 
 {
-    "title": "holahola",
-    "author": "paco",
+    "title": "",
+    "author": "",
     "url": "www.goggle.s"
 
 }
@@ -45,13 +45,13 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:3003/api/blogs/ HTTP/1.1
+POST http://localhost:3001/api/blogs/ HTTP/1.1
 content-type: application/json
-Authorization: bearer eyJhbGci2JIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBydWViYURFRUxFVEUyIiwiaWQiOiI2MDE1OWY1YzVmMTg0ODJlY2RmNzM4NGEiLCJpYXQiOjE2MTIwMjk4Njh9.oWk48j1wwQ5LC2M0wcvn-20Yqg3xL7GsRUbe2b2W2yM
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBydWViYURFRUxFVEUxIiwiaWQiOiI2MDE1OWY1OTVmMTg0ODJlY2RmNzM4NDkiLCJpYXQiOjE2MTIxOTAwNjN9.gJN8ZiIGbu54Yq9gAqlIPewnj35mTzNc3mm-AtjX0bk
 
 {
-      "title": "DELETEME2222",
-    "author": "pbbaco",
+      "title": "",
+    "author": "",
     "url": "www.goggle.s"
 }
 
