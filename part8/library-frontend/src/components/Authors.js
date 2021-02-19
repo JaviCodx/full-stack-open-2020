@@ -9,6 +9,9 @@ const Authors = (props) => {
 
   const [editAuthor] = useMutation(UPDATE_YEAR_BORN, {
     refetchQueries: [{ query: ALL_AUTHORS }],
+    onError: (error) => {
+      props.setError(error.graphQLErrors[0].message);
+    },
   });
 
   if (!props.show) {
