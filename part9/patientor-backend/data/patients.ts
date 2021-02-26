@@ -25,6 +25,7 @@ const data = [
     ssn: "250470-555L",
     gender: "male",
     occupation: "Technician",
+    entries: [],
   },
   {
     id: "d2773822-f723-11e9-8f0b-362b9e155667",

@@ -20,4 +20,9 @@ router.post("/", (req, res) => {
   }
 });
 
+router.get("/:id", (req, res) => {
+  const patient = patientService.getPatient(req.params.id);
+  patient ? res.send(patient) : res.sendStatus(404).send("Not found");
+});
+
 export default router;
