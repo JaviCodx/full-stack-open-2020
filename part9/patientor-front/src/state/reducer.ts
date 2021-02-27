@@ -24,7 +24,7 @@ export const reducer = (state: State, action: Action): State => {
           ...action.payload.reduce(
             (memo, patient) => ({
               ...memo,
-              [patient.id]: { ...patient, loadingStatus: "idle" },
+              [patient.id]: { ...patient },
             }),
             {}
           ),
@@ -48,4 +48,25 @@ export const reducer = (state: State, action: Action): State => {
     default:
       return state;
   }
+};
+
+export const setPatientList = (patientList: Patient[]): Action => {
+  return {
+    type: "SET_PATIENT_LIST",
+    payload: patientList,
+  };
+};
+
+export const addPatient = (patient: Patient): Action => {
+  return {
+    type: "ADD_PATIENT",
+    payload: patient,
+  };
+};
+
+export const setPatientInfo = (patient: Patient): Action => {
+  return {
+    type: "SET_PATIENT_INFO",
+    payload: patient,
+  };
 };

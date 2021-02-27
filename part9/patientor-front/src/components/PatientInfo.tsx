@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import { Icon, Loader } from "semantic-ui-react";
+import { Icon, Loader, Card, Segment } from "semantic-ui-react";
+import EntryDetails from "./EntryDetails";
 
 import { apiBaseUrl } from "../constants";
 
 import { useParams } from "react-router-dom";
 import { Patient } from "../types";
-import { useStateValue } from "../state";
+import { useStateValue, setPatientInfo } from "../state";
 
 const PatientInfo: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -21,27 +22,54 @@ const PatientInfo: React.FC = () => {
         const { data } = await axios.get<Patient>(
           `${apiBaseUrl}/patients/${id}`
         );
-        dispatch({ type: "SET_PATIENT_INFO", payload: data });
+        dispatch(setPatientInfo(data));
         console.log(data);
       } catch (e) {
         console.error(e);
       }
     };
-    if (patient && patientInfo.id !== patient.id) {
+    if (patient && patientInfo && patientInfo.id !== patient.id) {
       fetchPatient();
     }
+    // eslint-disable-next-line
   }, [id, dispatch]);
 
   if (!patientInfo) {
     return <Loader active inline />;
   }
 
-  return (
-    <h3>
-      {patientInfo.name}
+  const header = (
+    <>
+      <h3>
+        {patientInfo.name}
+        <Icon name={patientInfo.gender as any} />
+      </h3>
+      <h4>Born in {patientInfo.dateOfBirth}</h4>
+    </>
+  );
 
-      <Icon name={patientInfo.gender as any}></Icon>
-    </h3>
+  return (
+    <Segment.Group>
+      <Segment>
+        <Card
+          image={
+            patientInfo.gender === "male"
+              ? "https://react.semantic-ui.com/images/avatar/large/elliot.jpg"
+              : "https://react.semantic-ui.com/images/avatar/large/molly.png"
+          }
+          header={header}
+          meta={`ssn: ${patientInfo.ssn}`}
+          description={`${patientInfo.name} occupation is : ${patientInfo.occupation}`}
+        />
+      </Segment>
+      <Segment>
+        <h5>Entries</h5>
+
+        {patientInfo.entries?.map((e) => (
+          <EntryDetails key={e.id} entry={e}></EntryDetails>
+        ))}
+      </Segment>
+    </Segment.Group>
   );
 };
 
